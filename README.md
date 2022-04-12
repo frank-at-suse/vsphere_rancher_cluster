@@ -22,7 +22,7 @@ This Terraform plan is for creating a multi-node RKE2 cluster with vSphere CPI/C
 
 ## To Run
     > terraform apply -parallelism=1 
-Parallelism needs to be forced to 1 for this plan (Terraform default is 10) or else the Helm catalogs will encounter errors and the plan will error.  If you still encounter any Helm/catalog errors during apply, simply re-running the plan is enough to resolve them.
+Parallelism needs to be forced to 1 for this plan (Terraform default is 10) or else the Helm catalogs will encounter HTTP 500 & "resource not found" errors and the plan will fail.  If you still encounter any Helm/catalog errors during apply, simply re-running the plan is enough to resolve them.
 
 ## Tested Versions
 
