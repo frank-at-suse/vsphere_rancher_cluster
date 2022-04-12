@@ -1,7 +1,7 @@
 # To avoid issues like https://github.com/rancher/terraform-provider-rancher2/issues/662#issuecomment-1063125260
 resource "rancher2_cluster_sync" "active_cluster" {
   cluster_id    = rancher2_cluster_v2.rke2.cluster_v1_id
-  state_confirm = 75 # Catalog resources will wait for 4 minutes after cluster reaches active state
+  state_confirm = 75 # Catalog resources will wait for 6 minutes after cluster reaches active state
 }
 
 resource "rancher2_catalog_v2" "metallb" {
