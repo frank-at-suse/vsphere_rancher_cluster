@@ -1,0 +1,31 @@
+#cloud-config
+
+# Upgrade OS Packages
+package_upgrade: true
+
+# Install Individual Packages Here
+packages:
+  - wireguard # For using wireguard as Calico/Canal backend (requires Kubernetes v1.23+ and Calico 3.14+)
+
+write_files:
+  # These sysctl settings are for k8s kubelet "protect-kernel-defaults" CIS Setting
+- content: |
+    kernel.panic = 10
+    kernel.panic_on_oops = 1
+    kernel.panic_ps = 1
+    vm.overcommit_memory = 1
+    vm.panic_on_oom = 0
+  path: /etc/sysctl.d/99-kubeletSettings.conf
+
+runcmd:
+  - sysctl -p /etc/sysctl.d/99-kubeletSettings.conf
+
+# Create Users Here
+users:
+  - name: ${ssh_user}
+    gecos: Interactive Maintenance User Account
+    groups: [sudo]
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh_authorized_keys:
+      - ${ssh_public_key}
