@@ -62,7 +62,8 @@ resource "rancher2_cluster_v2" "rke2" {
   rke_config {
     chart_values = <<EOF
       rke2-canal:
-        backend: wireguard
+        flannel:
+          backend: "wireguard"
 
       rke2-ingress-nginx:
         controller:
