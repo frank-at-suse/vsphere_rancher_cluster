@@ -64,14 +64,14 @@ resource "rancher2_cluster_v2" "rke2" {
   name               = random_pet.cluster_name.id
   
   rke_config {
- #   chart_values = <<EOF
- #     rke2-ingress-nginx:
- #       controller:
- #         publishService:
- #           enabled: true
- #         service:
- #           enabled: true
-#    EOF
+    chart_values = <<EOF
+      rke2-ingress-nginx:
+        controller:
+          publishService:
+            enabled: true
+          service:
+            enabled: true
+    EOF
 
     machine_global_config = <<EOF
       cni: ${var.rancher_env.cni}
