@@ -1,20 +1,3 @@
-variable "cloud_credential" {
-  description = "Name of existing Rancher Server vSphere Cloud Credential"
-  type        = string
-}
-
-variable "cluster_annotations" {
-  description = "Optional. Annotations in Key=Value format"
-  default     = {}
-  type        = map(string)
-}
-
-variable "cluster_labels" {
-  description = "Optional. Cluster Labels in Key=Value format. Handy for app provisioning via Fleet Cluster Groups"
-  default     = {}
-  type        = map(string)
-}
-
 variable "metallb" {
   description = "IP pool for metalLB L2 Configuration"
   type = object ({
@@ -23,9 +6,17 @@ variable "metallb" {
   })
 }
 
-variable "rke2_version" {
-  description = "For list of RKE2 release versions, please visit: https://github.com/rancher/rke2/releases"
-  type        = string
+variable "rancher_env" {
+  description = "Variables for Rancher environment"
+  type = object ({
+    cloud_credential     = string
+    cluster_annotations  = map(string)
+    cluster_labels       = map(string)
+    cni                  = string
+    ctl_plane_count      = number
+    rke2_version         = string
+    worker_count         = number
+  })
 }
 
 variable "vsphere_env" {
@@ -33,12 +24,31 @@ variable "vsphere_env" {
   type = object ({
     cloud_image_name = string #
     compute_node     = string #
+    cpi_chart_ver    = string #
+    csi_chart_ver    = string #
     datacenter       = string #
     datastore        = string #
     ds_url           = string #
     library_name     = string #
     server           = string #
     user             = string #
-    vm_network       = string #
+    vm_network       = list(string) #
   })
+}
+
+# These are machine specs for node roles.  Be mindful of System Requirements!
+variable "ctl_plane_node" {
+  type = object ({
+    vram         = number
+    vcpu         = number
+    hdd_capacity = number
+  })
+}
+
+variable "worker_node" {
+  type = object ({
+    vram         = number
+    vcpu         = number
+    hdd_capacity = number
+})
 }

@@ -1,5 +1,5 @@
 data "rancher2_cloud_credential" "auth" {
-  name = var.cloud_credential
+  name = var.rancher_env.cloud_credential
 }
 
 data "rancher2_namespace" "kube_system" {

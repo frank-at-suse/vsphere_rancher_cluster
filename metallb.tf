@@ -12,6 +12,12 @@ resource "rancher2_app_v2" "metallb" {
     })
 }
 
+resource "rancher2_catalog_v2" "metallb" {
+  cluster_id = rancher2_cluster_v2.rke2.cluster_v1_id
+  name       = "metallb"
+  url        = "https://metallb.github.io/metallb"
+}
+
 resource "rancher2_namespace" "metallb_system" {
   name             = "metallb-system"
   project_id       = data.rancher2_project.system.id

@@ -1,10 +1,10 @@
 resource "rancher2_app_v2" "vsphere_storage_provider" {
   chart_name    = "rancher-vsphere-csi"
-  chart_version = "2.5.1-rancher101"
+  chart_version = var.vsphere_env.csi_chart_ver
   cluster_id    = rancher2_cluster_v2.rke2.cluster_v1_id
   name          = "vsphere-csi"
   namespace     = data.rancher2_namespace.kube_system.id
-  repo_name     = "rancher-rke2-charts"
+  repo_name     = "rancher-charts"
   values        = <<EOF
     storageClass:
       datastoreURL: ${var.vsphere_env.ds_url}

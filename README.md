@@ -30,7 +30,7 @@ Parallelism needs to be forced to 1 for this plan (Terraform default is 10) or e
 | SOFTWARE | VERSION | DOCS |
 | ------ | ------ | ------ |
 | MetalLB | 0.12.1 | https://metallb.universe.tf
-| Rancher Server | 2.6.4 | https://rancher.com/docs/rancher/v2.6/en/overview
+| Rancher Server | 2.6.4, 2.6.5-rc1 | https://rancher.com/docs/rancher/v2.6/en/overview
 | Rancher Terraform Provider| 1.23.0 | https://registry.terraform.io/providers/rancher/rancher2/latest/docs
 | RKE2 | 1.22.7+rke2r2, 1.23.4+rke2r2 | https://docs.rke2.io
 | Terraform | 1.1.8 | https://www.terraform.io/docs
