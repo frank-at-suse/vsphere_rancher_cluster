@@ -21,3 +21,16 @@ vsphere_env = {
   user             = "rancher_user@vsphere.local"
   vm_network       = "k8s"
 }
+
+# These are machine specs for nodes.  Be mindful of System Requirements!
+ctl_plane_node = {
+  vram         = 4096
+  vcpu         = 2
+  hdd_capacity = 81920
+}
+
+worker_node = {
+  vram         = 8192
+  vcpu         = 4
+  hdd_capacity = 30720
+}
