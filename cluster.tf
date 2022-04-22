@@ -65,6 +65,10 @@ resource "rancher2_cluster_v2" "rke2" {
   
   rke_config {
     chart_values = <<EOF
+      rke2-calico:
+        felixConfiguration:
+          wireguardEnabled: true
+          
       rke2-ingress-nginx:
         controller:
           publishService:
