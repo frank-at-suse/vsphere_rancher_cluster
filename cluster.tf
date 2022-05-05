@@ -58,8 +58,7 @@ resource "rancher2_cluster_v2" "rke2" {
   kubernetes_version = var.rancher_env.rke2_version
   labels             = var.rancher_env.cluster_labels
   local_auth_endpoint {
-    enabled = true
-    fqdn    = "${terraform.workspace}.lab.local"
+    enabled  = true
   }
   name               = random_pet.cluster_name.id
   
@@ -88,11 +87,12 @@ resource "rancher2_cluster_v2" "rke2" {
     EOF
 
     machine_pools {
-      cloud_credential_secret_name = data.rancher2_cloud_credential.auth.id
-      control_plane_role           = true
-      etcd_role                    = true
-      name                         = "ctl-plane"
-      quantity                     = var.rancher_env.ctl_plane_count
+      cloud_credential_secret_name   = data.rancher2_cloud_credential.auth.id
+      control_plane_role             = true
+      etcd_role                      = true
+      name                           = "ctl-plane"
+      quantity                       = var.rancher_env.ctl_plane_count
+      unhealthy_node_timeout_seconds = 120
 
       machine_config {
         kind = rancher2_machine_config_v2.ctl_plane.kind
@@ -101,10 +101,11 @@ resource "rancher2_cluster_v2" "rke2" {
     }
 
     machine_pools {
-      cloud_credential_secret_name = data.rancher2_cloud_credential.auth.id
-      name                         = "workers"
-      quantity                     = var.rancher_env.worker_count
-      worker_role                  = true
+      cloud_credential_secret_name   = data.rancher2_cloud_credential.auth.id
+      name                           = "workers"
+      quantity                       = var.rancher_env.worker_count
+      unhealthy_node_timeout_seconds = 120
+      worker_role                    = true
 
       machine_config {
         kind = rancher2_machine_config_v2.workers.kind
