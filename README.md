@@ -7,6 +7,7 @@ This Terraform plan is for creating a multi-node RKE2 cluster with vSphere CPI/C
 ## Environment Prerequisites 
 - Functional Rancher Management Server with vSphere Cloud Credential
 - vCenter >= 7.x and credentials with appropriate permissions (see https://rancher.com/docs/rancher/v2.6/en/cluster-provisioning/rke-clusters/node-pools/vsphere/creating-credentials)
+- Virtual Machine Hardware Compatibility at Version >= 15
 - Create the following in the files/ directory:
 
     | NAME | PURPOSE |
@@ -30,9 +31,9 @@ Parallelism needs to be forced to 1 for this plan (Terraform default is 10) or e
 | SOFTWARE | VERSION | DOCS |
 | ------ | ------ | ------ |
 | MetalLB | 0.12.1 | https://metallb.universe.tf
-| Rancher Server | 2.6.4, 2.6.5-rc1 | https://rancher.com/docs/rancher/v2.6/en/overview
+| Rancher Server | 2.6.4, 2.6.5 | https://rancher.com/docs/rancher/v2.6/en/overview
 | Rancher Terraform Provider| 1.23.0 | https://registry.terraform.io/providers/rancher/rancher2/latest/docs
-| RKE2 | 1.22.7+rke2r2, 1.23.4+rke2r2 | https://docs.rke2.io
+| RKE2 | 1.23.4+rke2r2, 1.23.6+rke2r2 | https://docs.rke2.io
 | Terraform | 1.1.8 | https://www.terraform.io/docs
 | Ubuntu | 20.04 LTS Cloud Image | https://ubuntu.com/server/docs/cloud-images/introduction
 | vSphere | 7.0.3 Build 19480866 | https://docs.vmware.com/en/VMware-vSphere/index.html
