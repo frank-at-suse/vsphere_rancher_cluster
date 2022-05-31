@@ -2,7 +2,7 @@
 ![Rancher](https://img.shields.io/badge/rancher-%230075A8.svg?style=for-the-badge&logo=rancher&logoColor=white) ![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white) ![Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white) 	![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=for-the-badge&logo=kubernetes&logoColor=white)
 
 ## Reason for Being
-This Terraform plan is for creating a multi-node RKE2 cluster with vSphere CPI/CSI & MetalLB already installed and configured.  RKE2's NGiNX Ingress Controller is also set as a LoadBalancer service to work in concert with MetalLB.  Along with those quality-of-life additions, this cluster plan takes the standard RKE2 security posture a couple of steps further by way of installing with CIS 1.5 Profile enabled as well as using Wireguard for pod-to-pod networking.
+This Terraform plan is for creating a multi-node RKE2 cluster with vSphere CPI/CSI & MetalLB already installed and configured.  RKE2's NGiNX Ingress Controller is also set as a LoadBalancer service to work in concert with MetalLB.  Along with those quality-of-life additions, this cluster plan takes the standard RKE2 security posture a couple of steps further by way of installing with CIS 1.5 Profile enabled as well as using Calico's Wireguard backend for encrypting pod-to-pod communication.
 
 ## Environment Prerequisites 
 - Functional Rancher Management Server with vSphere Cloud Credential
