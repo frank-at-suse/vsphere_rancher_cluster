@@ -12,4 +12,10 @@ resource "rancher2_app_v2" "vsphere-cloud-provider" {
       password: ${file( "${path.cwd}/files/.vsphere-passwd" )}
       username: ${var.vsphere_env.user}
   EOF
+
+  lifecycle {
+    ignore_changes = [
+      namespace,
+    ]
+  } # Close lifecycle
 }
