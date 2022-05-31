@@ -79,9 +79,10 @@ resource "rancher2_cluster_v2" "rke2" {
     machine_global_config = <<EOF
       cni: ${var.rancher_env.cni}
       etcd-arg: [ "--experimental-initial-corrupt-check" ]
-      kube-apiserver-arg: [ "--enable-admission-plugins=AlwaysPullImages,NodeRestriction" ]
+      kube-apiserver-arg: [ "--enable-admission-plugins=AlwaysPullImages,NodeRestriction","--tls-min-version=VersionTLS13" ]
       kube-controller-manager-arg: [ "--terminated-pod-gc-threshold=10","--tls-min-version=VersionTLS13" ]
       kube-proxy-arg: [ "--ipvs-strict-arp=true" ]
+      kube-scheduler-arg: [ "--tls-min-version=VersionTLS13" ]
       kubelet-arg: [ "--cloud-provider=vsphere","--event-qps=0","--make-iptables-util-chains=true" ]
       profile: cis-1.5
     EOF
