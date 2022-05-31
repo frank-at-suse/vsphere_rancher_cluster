@@ -66,7 +66,7 @@ resource "rancher2_cluster_v2" "rke2" {
     chart_values = <<EOF
       rke2-calico:
         felixConfiguration:
-          wireguardEnabled: true
+          wireguardEnabled: ${var.rancher_env.p2p_encryption}
           
       rke2-ingress-nginx:
         controller:
@@ -80,7 +80,7 @@ resource "rancher2_cluster_v2" "rke2" {
       cni: ${var.rancher_env.cni}
       etcd-arg: [ "--experimental-initial-corrupt-check" ]
       kube-apiserver-arg: [ "--enable-admission-plugins=AlwaysPullImages,NodeRestriction" ]
-      kube-controller-manager-arg: [ "--terminated-pod-gc-threshold=10" ]
+      kube-controller-manager-arg: [ "--terminated-pod-gc-threshold=10","--tls-min-version=VersionTLS13" ]
       kube-proxy-arg: [ "--ipvs-strict-arp=true" ]
       kubelet-arg: [ "--cloud-provider=vsphere","--event-qps=0","--make-iptables-util-chains=true" ]
       profile: cis-1.5
@@ -117,7 +117,7 @@ resource "rancher2_cluster_v2" "rke2" {
       config = {
         disable-cloud-controller = true # Disables built-in RKE2 Cloud Controller
         protect-kernel-defaults  = true # Required to install RKE2 with CIS Profile enabled
-      }
-    }
-  }
-}
+      } 
+    } # End machine_selector_config Resource
+  } # End of rke_config
+} # End of rancher2_cluster_v2 Resource
