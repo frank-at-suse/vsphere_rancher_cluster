@@ -1,12 +1,12 @@
 rancher_env = {
     cloud_credential    = "cloud-credential"
     cluster_annotations = { "key1"="value1","key2"="value2" }
-    cni                  = canal
-    ctl_plane_count      = 3
+    cni                 = "calico"
+    ctl_plane_count     = 3
     cluster_labels      = { key="value" }
     p2p_encryption      = true
     rke2_version        = "v1.23.4+rke2r2"
-    worker_count         = 3
+    worker_count        = 3
 }
 
 metallb = {
