@@ -14,6 +14,7 @@ variable "rancher_env" {
     cluster_labels       = map(string)
     cni                  = string
     ctl_plane_count      = number
+    p2p_encryption       = bool
     rke2_version         = string
     worker_count         = number
   })
