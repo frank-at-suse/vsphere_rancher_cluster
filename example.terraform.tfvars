@@ -4,6 +4,7 @@ rancher_env = {
     cni                  = canal
     ctl_plane_count      = 3
     cluster_labels      = { key="value" }
+    p2p_encryption      = true
     rke2_version        = "v1.23.4+rke2r2"
     worker_count         = 3
 }
