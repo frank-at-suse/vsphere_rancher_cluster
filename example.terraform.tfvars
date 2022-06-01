@@ -14,6 +14,12 @@ metallb = {
   starting_ip = "1.2.3.5"
 }
 
+# These are machine specs for nodes.  Be mindful of System Requirements!
+node = { 
+  ctl_plane = { hdd_capacity = 40960,quantity = 3,vcpu = 4,vram = 4096 }
+  worker    = { hdd_capacity = 81920,quantity = 4,vcpu = 4,vram = 8192 }
+}
+
 vsphere_env = {
   cloud_image_name = "ubuntu"
   compute_node     = "esxi.node.local"
@@ -26,17 +32,4 @@ vsphere_env = {
   server           = "appliance.fqdn or IP"
   user             = "rancher_user@vsphere.local"
   vm_network       = "k8s"
-}
-
-# These are machine specs for nodes.  Be mindful of System Requirements!
-ctl_plane_node = {
-  vram         = 4096
-  vcpu         = 2
-  hdd_capacity = 81920
-}
-
-worker_node = {
-  vram         = 8192
-  vcpu         = 4
-  hdd_capacity = 30720
 }

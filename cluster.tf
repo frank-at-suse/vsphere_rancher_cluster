@@ -1,53 +1,28 @@
 resource "random_pet" "cluster_name" {
   length = 2
-  prefix = lower( "${rancher2_machine_config_v2.workers.kind}-${terraform.workspace}" )
+  prefix = "vsphere-${terraform.workspace}"
 }
 
-# Rancher Machine Config for k8s Control Plane
-resource "rancher2_machine_config_v2" "ctl_plane" {
-  generate_name = "ctl-plane"
+resource "rancher2_machine_config_v2" "nodes" {
+  for_each      = var.node
+  generate_name = replace( each.key,"_","-" )
 
   vsphere_config {
     cfgparam        = [ "disk.enableUUID=TRUE" ] # Disk UUID is Required for vSphere Storage Provider
     clone_from      = var.vsphere_env.cloud_image_name
-    cloud_config    = templatefile( "${path.cwd}/files/user-data-ctl-plane.yaml", 
+    cloud_config    = templatefile( "${path.cwd}/files/user-data-${each.key}.yaml", 
       {
         ssh_user       = "rancher",
         ssh_public_key = file( "${path.cwd}/files/.ssh-public-key", )
       }) # End of templatefile
     content_library = var.vsphere_env.library_name
-    cpu_count       = var.ctl_plane_node.vcpu
+    cpu_count       = each.value.vcpu
     creation_type   = "library"
     datacenter      = var.vsphere_env.datacenter
     datastore       = var.vsphere_env.datastore
-    disk_size       = var.ctl_plane_node.hdd_capacity
+    disk_size       = each.value.hdd_capacity
     hostsystem      = var.vsphere_env.compute_node
-    memory_size     = var.ctl_plane_node.vram
-    network         = var.vsphere_env.vm_network
-    vcenter         = var.vsphere_env.server
-  }
-}
-
-# Rancher Machine Config for dedicated Workers pool
-resource "rancher2_machine_config_v2" "workers" {
-  generate_name = "workers"
-
-  vsphere_config {
-    cfgparam        = [ "disk.enableUUID=TRUE" ] # Disk UUID is Required for vSphere Storage Provider
-    clone_from      = var.vsphere_env.cloud_image_name
-    cloud_config    = templatefile( "${path.cwd}/files/user-data-ctl-plane.yaml", 
-      {
-        ssh_user       = "rancher",
-        ssh_public_key = file( "${path.cwd}/files/.ssh-public-key", )
-      }) # End of templatefile
-    content_library = var.vsphere_env.library_name
-    cpu_count       = var.worker_node.vcpu
-    creation_type   = "library"
-    datacenter      = var.vsphere_env.datacenter
-    datastore       = var.vsphere_env.datastore
-    disk_size       = var.worker_node.hdd_capacity
-    hostsystem      = var.vsphere_env.compute_node
-    memory_size     = var.worker_node.vram
+    memory_size     = each.value.vram
     network         = var.vsphere_env.vm_network
     vcenter         = var.vsphere_env.server
   }
@@ -57,10 +32,11 @@ resource "rancher2_cluster_v2" "rke2" {
   annotations        = var.rancher_env.cluster_annotations
   kubernetes_version = var.rancher_env.rke2_version
   labels             = var.rancher_env.cluster_labels
+  name               = replace(random_pet.cluster_name.id,"_","-")
+
   local_auth_endpoint {
     enabled  = true
   }
-  name               = random_pet.cluster_name.id
   
   rke_config {
     chart_values = <<EOF
@@ -78,7 +54,7 @@ resource "rancher2_cluster_v2" "rke2" {
 
     machine_global_config = <<EOF
       cni: ${var.rancher_env.cni}
-      etcd-arg: [ "--experimental-initial-corrupt-check" ]
+      etcd-arg: [ "--experimental-initial-corrupt-check=true" ]
       kube-apiserver-arg: [ "--enable-admission-plugins=AlwaysPullImages,NodeRestriction","--tls-min-version=VersionTLS13" ]
       kube-controller-manager-arg: [ "--terminated-pod-gc-threshold=10","--tls-min-version=VersionTLS13" ]
       kube-proxy-arg: [ "--ipvs-strict-arp=true" ]
@@ -87,30 +63,21 @@ resource "rancher2_cluster_v2" "rke2" {
       profile: cis-1.5
     EOF
 
-    machine_pools {
-      cloud_credential_secret_name   = data.rancher2_cloud_credential.auth.id
-      control_plane_role             = true
-      etcd_role                      = true
-      name                           = "ctl-plane"
-      quantity                       = var.rancher_env.ctl_plane_count
-      unhealthy_node_timeout_seconds = 120
-
-      machine_config {
-        kind = rancher2_machine_config_v2.ctl_plane.kind
-        name = rancher2_machine_config_v2.ctl_plane.name
-      }
-    }
-
-    machine_pools {
-      cloud_credential_secret_name   = data.rancher2_cloud_credential.auth.id
-      name                           = "workers"
-      quantity                       = var.rancher_env.worker_count
-      unhealthy_node_timeout_seconds = 120
-      worker_role                    = true
-
-      machine_config {
-        kind = rancher2_machine_config_v2.workers.kind
-        name = rancher2_machine_config_v2.workers.name
+    dynamic "machine_pools" {
+      for_each = var.node
+      content {
+        cloud_credential_secret_name   = data.rancher2_cloud_credential.auth.id
+        control_plane_role             = machine_pools.key == "ctl_plane" ? true : false
+        etcd_role                      = machine_pools.key == "ctl_plane" ? true : false
+        name                           = replace(machine_pools.key,"_","-")
+        quantity                       = machine_pools.value.quantity
+        unhealthy_node_timeout_seconds = 120
+        worker_role                    = machine_pools.key != "ctl_plane" ? true : false
+  
+        machine_config {
+          kind = rancher2_machine_config_v2.nodes[machine_pools.key].kind
+          name = replace(rancher2_machine_config_v2.nodes[machine_pools.key].name,"_","-")
+        }
       }
     }
 

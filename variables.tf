@@ -6,6 +6,13 @@ variable "metallb" {
   })
 }
 
+variable "node" {
+  type = object ({
+    ctl_plane = map(any)
+    worker    = map(any)
+  })
+}
+
 variable "rancher_env" {
   description = "Variables for Rancher environment"
   type = object ({
