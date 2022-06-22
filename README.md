@@ -39,5 +39,5 @@ A default installation of RKE2 via Rancher Server will run containerd within the
 | RKE2 | 1.23.6+rke2r2, 1.23.7+rke2r2 | https://docs.rke2.io
 | Terraform | 1.2.1 | https://www.terraform.io/docs
 | Ubuntu | 20.04 LTS Cloud Image | https://ubuntu.com/server/docs/cloud-images/introduction
-| SLES 15 | Service Pack 3 | https://www.suse.com/download/sles/
+| SLES 15 | JeOS (Just Enough OS) Service Pack 3 | https://www.suse.com/download/sles/
 | vSphere | 7.0.3 Build 19480866 | https://docs.vmware.com/en/VMware-vSphere/index.html
