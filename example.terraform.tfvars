@@ -18,7 +18,7 @@ node = {
 }
 
 vsphere_env = {
-  cloud_image_name = "ubuntu"
+  cloud_image_name = "your-image-here"
   compute_node     = "esxi.node.local"
   datacenter       = "datacenter"
   datastore        = "fast"
