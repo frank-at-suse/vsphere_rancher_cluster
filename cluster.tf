@@ -40,6 +40,33 @@ resource "rancher2_cluster_v2" "rke2" {
 
   rke_config {
     chart_values = <<EOF
+      rancher-vsphere-cpi:
+        vCenter:
+          host: var.vsphere_env.server
+          port: 443
+          insecureFlag: "1"
+          datacenters: var.vsphere_env.datacenter
+          username: var.vsphere_env.user
+          password: ${file( "${path.cwd}/files/.vsphere-passwd" )
+          credentialsSecret:
+            name: "vsphere-cpi-creds"
+            generate: true
+
+      rancher-vsphere-csi:
+        vCenter:
+          host: var.vsphere_env.server
+          port: 443
+          insecureFlag: "1"
+          datacenters: var.vsphere_env.datacenter
+          username: var.vsphere_env.user
+          password: ${file( "${path.cwd}/files/.vsphere-passwd" )
+          configSecret:
+            name: "vsphere-config-secret"
+            generate: true
+        storageClass:
+          allowVolumeExpansion: true
+          datastoreURL: var.vsphere_env.ds_url
+
       rke2-calico:
         felixConfiguration:
           wireguardEnabled: true
@@ -53,7 +80,7 @@ resource "rancher2_cluster_v2" "rke2" {
     EOF
 
     machine_global_config = <<EOF
-      cni: ${var.rancher_env.cni}
+      cni: calico
       etcd-arg: [ "--experimental-initial-corrupt-check=true" ]
       kube-apiserver-arg: [ "--enable-admission-plugins=AlwaysPullImages,NodeRestriction","--tls-min-version=VersionTLS13" ]
       kube-controller-manager-arg: [ "--terminated-pod-gc-threshold=10","--tls-min-version=VersionTLS13" ]
@@ -75,8 +102,8 @@ resource "rancher2_cluster_v2" "rke2" {
         worker_role                    = machine_pools.key != "ctl_plane" ? true : false
 
         machine_config {
-          kind = rancher2_machine_config_v2.nodes[machine_pools.key].kind
-          name = replace(rancher2_machine_config_v2.nodes[machine_pools.key].name, "_", "-")
+          kind = rancher2_machine_config_v2.nodes[ machine_pools.key ].kind
+          name = replace(rancher2_machine_config_v2.nodes[ machine_pools.key ].name, "_", "-")
         }
       } # End of dynamic for_each content
     }   # End of machine_pools
