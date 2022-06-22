@@ -4,8 +4,7 @@ rancher_env = {
     cni                 = "calico"
     ctl_plane_count     = 3
     cluster_labels      = { key="value" }
-    p2p_encryption      = true
-    rke2_version        = "v1.23.4+rke2r2"
+    rke2_version        = "v1.23.7+rke2r2"
     worker_count        = 3
 }
 
@@ -23,8 +22,6 @@ node = {
 vsphere_env = {
   cloud_image_name = "ubuntu"
   compute_node     = "esxi.node.local"
-  cpi_chart_ver    = "100.3.0+up1.2.1"
-  csi_chart_ver    = "100.3.0+up2.5.1-rancher1"
   datacenter       = "datacenter"
   datastore        = "fast"
   ds_url           = "ds:///vmfs/volumes/.../"
