@@ -47,7 +47,7 @@ resource "rancher2_cluster_v2" "rke2" {
           insecureFlag: "1"
           datacenters: var.vsphere_env.datacenter
           username: var.vsphere_env.user
-          password: ${file( "${path.cwd}/files/.vsphere-passwd" )
+          password: file( "${path.cwd}/files/.vsphere-passwd" )
           credentialsSecret:
             name: "vsphere-cpi-creds"
             generate: true
@@ -59,7 +59,7 @@ resource "rancher2_cluster_v2" "rke2" {
           insecureFlag: "1"
           datacenters: var.vsphere_env.datacenter
           username: var.vsphere_env.user
-          password: ${file( "${path.cwd}/files/.vsphere-passwd" )
+          password: file( "${path.cwd}/files/.vsphere-passwd" )
           configSecret:
             name: "vsphere-config-secret"
             generate: true
