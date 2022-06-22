@@ -42,7 +42,7 @@ resource "rancher2_cluster_v2" "rke2" {
     chart_values = <<EOF
       rke2-calico:
         felixConfiguration:
-          wireguardEnabled: ${var.rancher_env.p2p_encryption}
+          wireguardEnabled: true
           
       rke2-ingress-nginx:
         controller:
