@@ -43,20 +43,3 @@ variable "vsphere_env" {
     vm_network       = list(string) #
   })
 }
-
-# These are machine specs for node roles.  Be mindful of System Requirements!
-variable "ctl_plane_node" {
-  type = object ({
-    vram         = number
-    vcpu         = number
-    hdd_capacity = number
-  })
-}
-
-variable "worker_node" {
-  type = object ({
-    vram         = number
-    vcpu         = number
-    hdd_capacity = number
-})
-}
