@@ -20,10 +20,7 @@ variable "rancher_env" {
     cluster_annotations  = map(string)
     cluster_labels       = map(string)
     cni                  = string
-    ctl_plane_count      = number
-    p2p_encryption       = bool
     rke2_version         = string
-    worker_count         = number
   })
 }
 
@@ -32,8 +29,6 @@ variable "vsphere_env" {
   type = object ({
     cloud_image_name = string #
     compute_node     = string #
-    cpi_chart_ver    = string #
-    csi_chart_ver    = string #
     datacenter       = string #
     datastore        = string #
     ds_url           = string #
