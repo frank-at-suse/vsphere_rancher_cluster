@@ -19,7 +19,6 @@ variable "rancher_env" {
     cloud_credential     = string
     cluster_annotations  = map(string)
     cluster_labels       = map(string)
-    cni                  = string
     rke2_version         = string
   })
 }
