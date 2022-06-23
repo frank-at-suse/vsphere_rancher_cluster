@@ -6,7 +6,7 @@ This Terraform plan is for creating a multi-node RKE2 cluster with vSphere CPI/C
 
 There is a lot of HereDoc in the "rke_config" section of cluster.tf so that it's easier to see what's going on - you'll probably want to put this info in a template file to keep the plan a bit neater than what's seen here.
 
-A default installation of RKE2 via Rancher Server will run containerd within the "systemd" control group and the Kubelet within the "cgroupfs" control group - this plan passes to the Kubelet a "--cgroup-driver=systemd" argument so that there is only a single cgroup manager running - better aligining the cluster with upstream K8S reccomendations ( see: https://kubernetes.io/docs/setup/production-environment/container-runtimes/#cgroup-drivers).
+Some operating systems will run containerd within the "systemd" control group and the Kubelet within the "cgroupfs" control group - this plan passes to the Kubelet a "--cgroup-driver=systemd" argument so that there is only a single cgroup manager running - better aligining the cluster with upstream K8S reccomendations ( see: https://kubernetes.io/docs/setup/production-environment/container-runtimes/#cgroup-drivers).
 
 ## Environment Prerequisites 
 - Functional Rancher Management Server with vSphere Cloud Credential
