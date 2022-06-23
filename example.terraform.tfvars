@@ -1,7 +1,6 @@
 rancher_env = {
     cloud_credential    = "cloud-credential"
     cluster_annotations = { "key1"="value1","key2"="value2" }
-    cni                 = "calico"
     cluster_labels      = { key="value" }
     rke2_version        = "v1.23.7+rke2r2"
 }
