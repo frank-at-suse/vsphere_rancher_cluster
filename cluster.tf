@@ -73,6 +73,8 @@ resource "rancher2_cluster_v2" "rke2" {
           
       rke2-ingress-nginx:
         controller:
+          config:
+            ssl-protocols: "TLSv1.2 TLSv1.3"
           publishService:
             enabled: true
           service:
