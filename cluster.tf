@@ -89,7 +89,6 @@ resource "rancher2_cluster_v2" "rke2" {
       kube-proxy-arg: [ "--ipvs-strict-arp=true" ]
       kube-scheduler-arg: [ "--tls-min-version=VersionTLS13" ]
       kubelet-arg: [ "--cgroup-driver=systemd","--event-qps=0","--make-iptables-util-chains=true","--tls-min-version=VersionTLS13" ]
-      profile: cis-1.6
     EOF
 
     dynamic "machine_pools" {
@@ -114,6 +113,7 @@ resource "rancher2_cluster_v2" "rke2" {
       config = {
         cloud-provider-name      = "rancher-vsphere"
         disable-cloud-controller = true # Disables built-in RKE2 Cloud Controller
+        profile                  = "cis-1.6"
         protect-kernel-defaults  = true # Required to install RKE2 with CIS Profile enabled
       }
     } # End machine_selector_config
