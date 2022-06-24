@@ -84,7 +84,7 @@ resource "rancher2_cluster_v2" "rke2" {
     machine_global_config = <<EOF
       cni: calico
       etcd-arg: [ "--experimental-initial-corrupt-check=true" ]
-      kube-apiserver-arg: [ "--enable-admission-plugins=AlwaysPullImages,NodeRestriction","--tls-min-version=VersionTLS13" ]
+      kube-apiserver-arg: [ "--audit-log-mode=blocking-strict","--enable-admission-plugins=AlwaysPullImages,NodeRestriction","--tls-min-version=VersionTLS13" ]
       kube-controller-manager-arg: [ "--terminated-pod-gc-threshold=10","--tls-min-version=VersionTLS13" ]
       kube-proxy-arg: [ "--ipvs-strict-arp=true" ]
       kube-scheduler-arg: [ "--tls-min-version=VersionTLS13" ]
