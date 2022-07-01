@@ -63,6 +63,9 @@ resource "rancher2_cluster_v2" "rke2" {
           configSecret:
             name: "vsphere-config-secret"
             generate: true
+        csiNode:
+          nodeSelector: 
+            node-role.kubernetes.io/worker: 'true'
         storageClass:
           allowVolumeExpansion: true
           datastoreURL: var.vsphere_env.ds_url
