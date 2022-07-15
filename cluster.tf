@@ -115,7 +115,6 @@ resource "rancher2_cluster_v2" "rke2" {
     machine_selector_config {
       config = {
         cloud-provider-name      = "rancher-vsphere"
-        disable-cloud-controller = true # Disables built-in RKE2 Cloud Controller
         profile                  = "cis-1.6"
         protect-kernel-defaults  = true # Required to install RKE2 with CIS Profile enabled
       }
