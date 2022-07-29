@@ -51,6 +51,9 @@ resource "rancher2_cluster_v2" "rke2" {
           credentialsSecret:
             name: "vsphere-cpi-creds"
             generate: true
+        cloudControllerManager:
+          nodeSelector:
+            node-role.kubernetes.io/control-plane: 'true'
 
       rancher-vsphere-csi:
         vCenter:
