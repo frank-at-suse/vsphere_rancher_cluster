@@ -40,4 +40,4 @@ Some operating systems will run containerd within the "systemd" control group an
 | Terraform | 1.2.1 | https://www.terraform.io/docs
 | Ubuntu | 20.04 LTS Cloud Image | https://ubuntu.com/server/docs/cloud-images/introduction
 | SLES 15 | JeOS (Just Enough OS) Service Pack 3 | https://www.suse.com/download/sles/
-| vSphere | 7.0.3 Build 19480866 | https://docs.vmware.com/en/VMware-vSphere/index.html
+| vSphere | 7.0.3 Build 19480866, Build 20036589 | https://docs.vmware.com/en/VMware-vSphere/index.html
