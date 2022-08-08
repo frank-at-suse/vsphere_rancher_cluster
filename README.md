@@ -25,6 +25,7 @@ Some operating systems will run containerd within the "systemd" control group an
 ## Caveats
  - vSphere CSI volumes are **RWO only** if not using vSAN Datastore
  - Using Wireguard as CNI backend comes at a performance penalty (see https://projectcalico.docs.tigera.io/security/encrypt-cluster-pod-traffic)
+ - MetalLB is configured in L2 mode, which means all LoadBalancer service traffic only goes to a single node, which is not suitable for production
 
 ## To Run
     > terraform apply
