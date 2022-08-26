@@ -38,7 +38,7 @@ Some operating systems will run containerd within the "systemd" control group an
 | Rancher Server | 2.6.6, 2.6.7 | https://rancher.com/docs/rancher/v2.6/en/overview
 | Rancher Terraform Provider| 1.24.0 | https://registry.terraform.io/providers/rancher/rancher2/latest/docs
 | RKE2 | 1.23.6+rke2r2, 1.23.7+rke2r2 | https://docs.rke2.io
-| Terraform | 1.2.1 | https://www.terraform.io/docs
+| Terraform | 1.2.7 | https://www.terraform.io/docs
 | Ubuntu | 20.04 LTS Cloud Image | https://ubuntu.com/server/docs/cloud-images/introduction
 | SLES 15 | JeOS (Just Enough OS) Service Pack 3 | https://www.suse.com/download/sles/
 | vSphere | 7.0.3 Build 19480866, Build 20036589 | https://docs.vmware.com/en/VMware-vSphere/index.html
