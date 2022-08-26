@@ -35,7 +35,7 @@ Some operating systems will run containerd within the "systemd" control group an
 | SOFTWARE | VERSION | DOCS |
 | ------ | ------ | ------ |
 | MetalLB | 0.12.1 | https://metallb.universe.tf
-| Rancher Server | 2.6.5, 2.6.6 | https://rancher.com/docs/rancher/v2.6/en/overview
+| Rancher Server | 2.6.6, 2.6.7 | https://rancher.com/docs/rancher/v2.6/en/overview
 | Rancher Terraform Provider| 1.24.0 | https://registry.terraform.io/providers/rancher/rancher2/latest/docs
 | RKE2 | 1.23.6+rke2r2, 1.23.7+rke2r2 | https://docs.rke2.io
 | Terraform | 1.2.1 | https://www.terraform.io/docs
