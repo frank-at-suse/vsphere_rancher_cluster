@@ -1,12 +1,7 @@
 #cloud-config
 
-# Upgrade OS Packages
-package_upgrade: true
-
 # Install Individual Packages Here
 packages:
-  - jq
-  - net-tools
   - wireguard # For using wireguard as Calico/Canal backend (requires Kubernetes v1.23+ and Calico 3.14+)
 
 write_files:

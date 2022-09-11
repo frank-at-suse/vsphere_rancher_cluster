@@ -5,11 +5,11 @@ resource "rancher2_app_v2" "metallb" {
   name          = "metallb"
   namespace     = rancher2_namespace.metallb_system.name
   repo_name     = "metallb"
-  values        = templatefile( "${path.cwd}/files/metallb_configmap.tftmpl",
+  values = templatefile("${path.cwd}/files/metallb_configmap.tftmpl",
     {
       ending_ip   = var.metallb.ending_ip,
       starting_ip = var.metallb.starting_ip,
-    })
+  })
 }
 
 resource "rancher2_catalog_v2" "metallb" {
