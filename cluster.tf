@@ -44,7 +44,7 @@ resource "rancher2_cluster_v2" "rke2" {
         vCenter:
           host: ${var.vsphere_env.server}
           port: 443
-          insecureFlag: "1"
+          insecureFlag: true
           datacenters: ${var.vsphere_env.datacenter}
           username: ${var.vsphere_env.user}
           password: ${file("${path.cwd}/files/.vsphere-passwd")}
