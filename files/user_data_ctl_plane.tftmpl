@@ -12,7 +12,48 @@ write_files:
     kernel.panic_ps = 1
     vm.overcommit_memory = 1
     vm.panic_on_oom = 0
+
   path: /etc/sysctl.d/99-kubeletSettings.conf
+
+- content: |
+    apiVersion: apiserver.config.k8s.io/v1
+    kind: AdmissionConfiguration
+    plugins:
+    - name: PodSecurity
+      configuration:
+        apiVersion: pod-security.admission.config.k8s.io/v1beta1
+        kind: PodSecurityConfiguration
+        defaults:
+          enforce: "restricted"
+          enforce-version: "latest"
+          audit: "restricted"
+          audit-version: "latest"
+          warn: "restricted"
+          warn-version: "latest"
+        exemptions:
+          namespaces:
+          - cattle-csp-adapter-system
+          - cattle-dashboards
+          - cattle-epinio-system
+          - cattle-externalip-system
+          - cattle-fleet-system
+          - cattle-gatekeeper-system
+          - cattle-istio-system
+          - cattle-logging-system
+          - cattle-monitoring-system
+          - cattle-neuvector-system
+          - cattle-sriov-system
+          - cattle-system
+          - cattle-ui-plugin-system
+          - cattle-windows-gmsa-system
+          - cis-operator-system
+          - ingress-nginx
+          - istio-system
+          - kube-system
+          - longhorn-system
+          - rancher-alerting-drivers
+          - tigera-operator
+  path: /etc/rancher/rke2/rancher-deployment-pss.yaml
 
 runcmd:
   - sysctl -p /etc/sysctl.d/99-kubeletSettings.conf
