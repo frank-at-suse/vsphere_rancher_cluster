@@ -32,6 +32,7 @@ write_files:
           warn-version: "latest"
         exemptions:
           namespaces:
+          - calico-system
           - cattle-csp-adapter-system
           - cattle-dashboards
           - cattle-epinio-system
