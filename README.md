@@ -36,6 +36,6 @@ Some operating systems will run containerd within the "systemd" control group an
 | kube-vip | 0.5.11 | https://kube-vip.io/docs/
 | Rancher Server | 2.7.2 | https://ranchermanager.docs.rancher.com/
 | Rancher Terraform Provider| 2.0.0 | https://registry.terraform.io/providers/rancher/rancher2/latest/docs
-| RKE2 | 1.27.7+rke2r1 | https://docs.rke2.io
+| RKE2 | 1.25.7+rke2r1 | https://docs.rke2.io
 | Terraform | 1.4.4 | https://www.terraform.io/docs
 | vSphere | 7.0.3.01300 | https://docs.vmware.com/en/VMware-vSphere/index.html
