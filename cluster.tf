@@ -57,7 +57,7 @@ resource "rancher2_cluster_v2" "rke2" {
 
       rancher-vsphere-csi:
         vCenter:
-          host: var.vsphere_env.server
+          host: ${var.vsphere_env.server}
           port: 443
           insecureFlag: "1"
           datacenters: ${var.vsphere_env.datacenter}
