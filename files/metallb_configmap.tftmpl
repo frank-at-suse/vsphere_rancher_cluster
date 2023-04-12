@@ -1,6 +1,0 @@
-configInline:
-  address-pools:
-   - name: default
-     protocol: layer2
-     addresses:
-     - ${starting_ip}-${ending_ip}
