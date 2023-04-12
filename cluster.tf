@@ -34,6 +34,7 @@ resource "rancher2_cluster_v2" "rke2" {
 
   rke_config {
     additional_manifest = templatefile("${path.cwd}/files/additional_manifests.tftmpl", {
+      kube_vip_rbac    = data.http.kube_vip_rbac.response_body
       kube_vip_version = jsondecode(data.http.kube_vip_version.response_body)["tag_name"]
       load_balancer_ip = var.kubevip.load_balancer_ip
     })
@@ -43,7 +44,7 @@ resource "rancher2_cluster_v2" "rke2" {
         vCenter:
           host: ${var.vsphere_env.server}
           port: 443
-          insecureFlag: "1"
+          insecureFlag: true
           datacenters: ${var.vsphere_env.datacenter}
           username: ${var.vsphere_env.user}
           password: ${file("${path.cwd}/files/.vsphere-passwd")}
@@ -56,7 +57,7 @@ resource "rancher2_cluster_v2" "rke2" {
 
       rancher-vsphere-csi:
         vCenter:
-          host: var.vsphere_env.server
+          host: ${var.vsphere_env.server}
           port: 443
           insecureFlag: "1"
           datacenters: ${var.vsphere_env.datacenter}
