@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: kube-vip
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      name: kube-vip
+  template:
+    metadata:
+      labels:
+        name: kube-vip
+    spec:
+      containers:
+      - args:
+        - manager
+        env:
+        - name: address
+          value: ${load_balancer_ip}
+        - name: cp_enable
+          value: "false"
+        - name: svc_enable
+          value: "true"
+        - name: vip_arp
+          value: "true"
+        image: ghcr.io/kube-vip/kube-vip:${kube_vip_version}
+        imagePullPolicy: Always
+        name: kube-vip
+        resources: {}
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+            - NET_RAW
+            - SYS_TIME
+      hostNetwork: true
+      serviceAccountName: kube-vip
+      nodeSelector:
+        node-role.kubernetes.io/worker: "true"
+        
+---
+
+${kube_vip_rbac}
