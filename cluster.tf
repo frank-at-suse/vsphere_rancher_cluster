@@ -33,6 +33,11 @@ resource "rancher2_cluster_v2" "rke2" {
   name               = random_pet.cluster_name.id
 
   rke_config {
+    additional_manifest = templatefile("${path.cwd}/files/additional_manifests.tftmpl", {
+      kube_vip_version = jsondecode(data.http.kube_vip_version.response_body)["tag_name"]
+      load_balancer_ip = var.kubevip.load_balancer_ip
+    })
+
     chart_values = <<EOF
       rancher-vsphere-cpi:
         vCenter:
@@ -110,7 +115,7 @@ resource "rancher2_cluster_v2" "rke2" {
     machine_selector_config {
       config = {
         cloud-provider-name     = "rancher-vsphere"
-        profile                 = "cis-1.6"
+        profile                 = "cis-1.23"
         protect-kernel-defaults = true # Required to install RKE2 with CIS Profile enabled
       }
     } # End machine_selector_config
