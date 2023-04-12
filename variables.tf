@@ -1,8 +1,7 @@
-variable "metallb" {
-  description = "IP pool for metalLB L2 Configuration"
+variable "kubevip" {
+  description = "IP pool for kube-vip L2 Configuration"
   type = object({
-    ending_ip   = string
-    starting_ip = string
+    load_balancer_ip = string
   })
 }
 
