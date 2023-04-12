@@ -34,6 +34,7 @@ resource "rancher2_cluster_v2" "rke2" {
 
   rke_config {
     additional_manifest = templatefile("${path.cwd}/files/additional_manifests.tftmpl", {
+      kube_vip_rbac    = data.http.kube_vip_rbac.response_body
       kube_vip_version = jsondecode(data.http.kube_vip_version.response_body)["tag_name"]
       load_balancer_ip = var.kubevip.load_balancer_ip
     })
