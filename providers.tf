@@ -4,7 +4,7 @@ terraform {
 
     rancher2 = {
       source  = "rancher/rancher2"
-      version = "1.24.1"
+      version = "2.0.0"
     }
   } # End of required_providers
 }   # End of terraform
