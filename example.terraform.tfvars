@@ -2,12 +2,11 @@ rancher_env = {
   cloud_credential    = "cloud-credential"
   cluster_annotations = { "foo" = "bar" }
   cluster_labels      = { "something" = "amazing" }
-  rke2_version        = "v1.24.4+rke2r1"
+  rke2_version        = "v1.25.7+rke2r1"
 }
 
-metallb = {
-  ending_ip   = "1.2.3.4"
-  starting_ip = "1.2.3.5"
+kubevip = {
+  load_balancer_ip = "172.16.71.254"
 }
 
 # These are machine specs for nodes.  Be mindful of System Requirements!
