@@ -32,27 +32,40 @@ write_files:
           warn-version: "latest"
         exemptions:
           namespaces:
+          - calico-apiserver
           - calico-system
+          - cattle-alerting
           - cattle-csp-adapter-system
-          - cattle-dashboards
           - cattle-epinio-system
           - cattle-externalip-system
+          - cattle-fleet-local-system
           - cattle-fleet-system
           - cattle-gatekeeper-system
+          - cattle-global-data
+          - cattle-global-nt
+          - cattle-impersonation-system
+          - cattle-istio
           - cattle-istio-system
+          - cattle-logging
           - cattle-logging-system
           - cattle-monitoring-system
           - cattle-neuvector-system
+          - cattle-prometheus
           - cattle-sriov-system
           - cattle-system
           - cattle-ui-plugin-system
           - cattle-windows-gmsa-system
+          - cert-manager
           - cis-operator-system
+          - fleet-default
           - ingress-nginx
           - istio-system
+          - kube-node-lease
+          - kube-public
           - kube-system
           - longhorn-system
           - rancher-alerting-drivers
+          - security-scan
           - tigera-operator
   path: /etc/rancher/rke2/rancher-deployment-pss.yaml
 
