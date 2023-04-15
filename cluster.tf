@@ -90,7 +90,7 @@ resource "rancher2_cluster_v2" "rke2" {
     machine_global_config = <<EOF
       cni: calico
       etcd-arg: [ "experimental-initial-corrupt-check=true" ] # Can be removed with etcd v3.6, which will enable corruption check by default (see: https://github.com/etcd-io/etcd/issues/13766)
-      kube-apiserver-arg: [ "audit-log-mode=blocking-strict","enable-admission-plugins=AlwaysPullImages,NodeRestriction","tls-min-version=VersionTLS13" ]
+      kube-apiserver-arg: [ "audit-log-mode=blocking-strict","enable-admission-plugins=AlwaysPullImages,NodeRestriction","pod-security-admission-config-file=/etc/rancher/rke2/rancher-deployment-pss.yaml",tls-min-version=VersionTLS13" ]
       kube-controller-manager-arg: [ "terminated-pod-gc-threshold=10","tls-min-version=VersionTLS13" ]
       kube-scheduler-arg: [ "tls-min-version=VersionTLS13" ]
       kubelet-arg: [ "cgroup-driver=systemd","event-qps=0","make-iptables-util-chains=true","tls-min-version=VersionTLS13" ]
