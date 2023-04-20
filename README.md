@@ -8,6 +8,65 @@ There is a lot of HereDoc in the `rke_config` section of `cluster.tf` so that it
 
 Some operating systems will run containerd within the "systemd" control group and the Kubelet within the "cgroupfs" control group - this plan passes to the Kubelet a `--cgroup-driver=systemd` argument to ensure that there will be only a single cgroup manager running - better aligining the cluster with upstream K8s reccomendations ( see: https://kubernetes.io/docs/setup/production-environment/container-runtimes/#cgroup-drivers).
 
+## Static IP Addressing
+Static IPs _can_ be implemented if needed. Firstly, a [Network Protocol Profile needs to be created in vSphere](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.networking.doc/GUID-D24DBAA0-68BD-49B9-9744-C06AE754972A.html). After the profile is created, two parts of this Terraform plan need to be changed: `cloud-init` and the `rancher2_machine_config_v2` resource in `cluster.tf`.
+
+1. A script must be added with `write_files` and executed via `runcmd` in `cloud-init`. This script gathers instance metadata, via vmtools, and then applies it (the below example uses Netplan. Your OS, however, may use something different):
+
+```
+- content: |
+  #!/bin/bash
+  vmtoolsd --cmd 'info-get guestinfo.ovfEnv' > /tmp/ovfenv
+  IPAddress=$(sed -n 's/.*Property oe:key="guestinfo.interface.0.ip.0.address" oe:value="\([^"]*\).*/\1/p' /tmp/ovfenv)
+  SubnetMask=$(sed -n 's/.*Property oe:key="guestinfo.interface.0.ip.0.netmask" oe:value="\([^"]*\).*/\1/p' /tmp/ovfenv)
+  Gateway=$(sed -n 's/.*Property oe:key="guestinfo.interface.0.route.0.gateway" oe:value="\([^"]*\).*/\1/p' /tmp/ovfenv)
+  DNS=$(sed -n 's/.*Property oe:key="guestinfo.dns.servers" oe:value="\([^"]*\).*/\1/p' /tmp/ovfenv)
+
+  cat > /etc/netplan/01-netcfg.yaml <<EOF
+  network:
+    version: 2
+    renderer: networkd
+    ethernets:
+      ens192:
+        addresses: 
+          - $IPAddress/24
+        gateway4: $Gateway
+        nameservers:
+        addresses : [$DNS]
+  EOF
+
+  netplan apply
+
+path: /root/netplan.sh
+```
+
+2. The below additions need to be made to `rancher2_machine_config_v2`.  This example would apply static IPv4 addresses to only the `ctl_plane` node pool:
+
+```
+vapp_ip_allocation_policy = each.key == "ctl_plane" ? "fixedAllocated" : null
+vapp_ip_protocol          = each.key == "ctl_plane" ? "IPv4" : null
+vapp_property = each.key == "ctl_plane" ? [
+  "guestinfo.interface.0.ip.0.address=ip:<vSwitch_from_Network_Protocol_Profile>",
+  "guestinfo.interface.0.ip.0.netmask=$${netmask:<vSwitch_from_Network_Protocol_Profile>}",
+  "guestinfo.interface.0.route.0.gateway=$${gateway:<vSwitch_from_Network_Protocol_Profile>}",
+  "guestinfo.dns.servers=$${dns:<vSwitch_from_Network_Protocol_Profile>}",
+] : null
+vapp_transport = each.key == "ctl_plane" ? "com.vmware.guestInfo" : null
+```
+
+Using static IPs comes with some small caveats:
+- In leu of "traditional" `cloud-init` logic to handle OS updates/upgrades & package installs:
+
+```
+package_reboot_if_required: true
+package_update: true
+package_upgrade: true
+packages:
+  - <insert_awesome_package_name_here>
+```
+
+Scripting would need to be introduced to take care of this later on in the `cloud-init` process, if desired (i.e. a `write_file` using `defer: true`). Since `runcmd` happens later in the `cloud-init` process, the node would not have an IP available to successfully complete any `package*` logic requiring network access.
+
 ## Environment Prerequisites 
 - Functional Rancher Management Server with vSphere Cloud Credential
 - vCenter >= 7.x and credentials with appropriate permissions (see https://rancher.com/docs/rancher/v2.6/en/cluster-provisioning/rke-clusters/node-pools/vsphere/creating-credentials)
