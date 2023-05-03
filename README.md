@@ -92,9 +92,9 @@ Scripting would need to be introduced to take care of this later on in the `clou
 
 | SOFTWARE | VERSION | DOCS |
 | ------ | ------ | ------ |
-| kube-vip | 0.5.11 | https://kube-vip.io/docs/
-| Rancher Server | 2.7.2 | https://ranchermanager.docs.rancher.com/
-| Rancher Terraform Provider| 2.0.0 | https://registry.terraform.io/providers/rancher/rancher2/latest/docs
-| RKE2 | 1.25.7+rke2r1 | https://docs.rke2.io
-| Terraform | 1.4.4 | https://www.terraform.io/docs
+| kube-vip | 0.5.12 | https://kube-vip.io/docs/
+| Rancher Server | 2.7.3 | https://ranchermanager.docs.rancher.com/
+| Rancher Terraform Provider| 3.0.0 | https://registry.terraform.io/providers/rancher/rancher2/latest/docs
+| RKE2 | 1.29.7+rke2r1 | https://docs.rke2.io
+| Terraform | 1.4.6 | https://www.terraform.io/docs
 | vSphere | 7.0.3.01300 | https://docs.vmware.com/en/VMware-vSphere/index.html
