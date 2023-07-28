@@ -35,7 +35,7 @@ Static IPs _can_ be implemented if needed. Firstly, a [Network Protocol Profile 
           - $IPAddress/24
         gateway4: $Gateway
         nameservers:
-        addresses : [$DNS]
+          addresses : [$DNS]
   EOF
 
   netplan apply
