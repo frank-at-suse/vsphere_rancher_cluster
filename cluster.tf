@@ -81,6 +81,9 @@ resource "rancher2_cluster_v2" "rke2" {
         controller:
           config:
             ssl-protocols: "TLSv1.2 TLSv1.3"
+          extraEnvs:
+            - name: OPENSSL_FIPS
+              value: "1"  
           publishService:
             enabled: true
           service:
