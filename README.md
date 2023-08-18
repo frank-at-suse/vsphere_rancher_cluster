@@ -85,16 +85,9 @@ Scripting would need to be introduced to take care of this later on in the `clou
     | .ssh-public-key       | SSH public key for additional OS user |
     | .vsphere-passwd       | Password associated with vSphere CPI/CSI credential |
 
-## CSI Driver Permissions
+## vSphere Permissions
 
-If you want to use a separate, least-privilege account for the CSI driver, these are the minimum permissions:
-| CATEGORY | PERMISSION |
-|:---------|:-----------|
-| Cns                    | Searchable |
-| Datastore              | Low level file operations |
-| Host                   | Configuration<br/>- Storage partition configuration |
-| Profile-driven storage | Profile-driven storage view |
-| Virtual machine        | Change Configuration<br/>- Add existing disk<br/>- Add or remove device |
+For required vSphere CPI & CSI account permissions see [HERE](https://github.com/rancher/barn/tree/main/Walkthroughs/vSphere/Permissions).
 
 ## Caveats
 
