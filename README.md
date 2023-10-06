@@ -74,7 +74,7 @@ Scripting would need to be introduced to take care of this later on in the `clou
 ## Environment Prerequisites
 
 - Functional Rancher Management Server with vSphere Cloud Credential
-- vCenter >= 7.x and credentials with appropriate permissions (see <https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/launch-kubernetes-with-rancher/use-new-nodes-in-an-infra-provider/vsphere/create-credentials>)
+- vCenter >= 7.x and credentials with appropriate permissions (see [vSphere Permissions section](./README.md#vsphere-permissions))
 - Virtual Machine Hardware Compatibility at Version >= 15
 - Create the following in the files/ directory:
 
@@ -105,9 +105,9 @@ terraform apply
 
 | SOFTWARE | VERSION | DOCS |
 |:---------|:--------|:-----|
-| kube-vip                   | 0.6.0         | <https://kube-vip.io/docs/> |
-| Rancher Server             | 2.7.4         | <https://ranchermanager.docs.rancher.com/> |
-| Rancher Terraform Provider | 3.0.0         | <https://registry.terraform.io/providers/rancher/rancher2/latest/docs> |
-| RKE2                       | 1.25.9+rke2r1 | <https://docs.rke2.io> |
+| kube-vip                   | 0.6.2         | <https://kube-vip.io/docs/> |
+| Rancher Server             | 2.7.6         | <https://ranchermanager.docs.rancher.com/> |
+| Rancher Terraform Provider | 3.1.1         | <https://registry.terraform.io/providers/rancher/rancher2/latest/docs> |
+| RKE2                       | 1.26.8+rke2r1 | <https://docs.rke2.io> |
 | Terraform                  | 1.4.6         | <https://www.terraform.io/docs> |
-| vSphere                    | 7.0.3.01300   | <https://docs.vmware.com/en/VMware-vSphere/index.html> |
+| vSphere                    | 8.0.1.00300   | <https://docs.vmware.com/en/VMware-vSphere/index.html> |
